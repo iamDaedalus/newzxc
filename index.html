@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="/caps.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a class="icon" href="#search">
+              <i class="bx bx-search"></i>
+              <span class="navText">Search</span>
+              <div class="line"></div>
+            </a>
+          </li>
+          <li>
+            <a class="icon" href="#home">
+              <i class="bx bx-home-alt"></i>
+              <span class="navText">Home</span>
+              <div class="line"></div>
+            </a>
+          </li>
+
+          <li>
+            <a class="icon" href="#movie"
+              ><i class="bx bx-film"></i>
+              <span class="navText">Movie</span>
+              <div class="line"></div>
+            </a>
+          </li>
+          <li>
+            <a class="icon" href="#tv">
+              <i class="bx bx-tv"></i>
+              <span class="navText">TV</span>
+              <div class="line"></div>
+            </a>
+          </li>
+          <li>
+            <a class="icon" href="#watchlist">
+              <i class="bx bx-list-ul"></i>
+              <span class="navText">Watchlist</span>
+              <div class="line"></div>
+            </a>
+          </li>
+          <li>
+            <a class="icon" href="#donate">
+              <i class="bx bx-donate-heart"></i>
+              <span class="navText">Donate</span>
+              <div class="line"></div>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div id="contents"></div>
+    </main>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/fetchshow.js"></script>
+  <script src="/fetchimages.js"></script>
+  <script src="/details.js"></script>
+  <script src="/company.js"></script>
+  <script src="/route.js"></script>
+  <script src="fetchtrailer.js"></script>
+  <script src="fetchactor.js"></script>
+  <script src="/fetchepisode.js"></script>
+  <script src="landing.js"></script>
+  <script src="/landingTrailer.js"></script>
+  <script src="lazy.js"></script>
+  <script src="watchlist.js"></script>
+  <script src="movie.js"></script>
+  <script src="watchlistFunction.js"></script>
+
+  <script>
+    // for (let i = 0; i < localStorage.length; i++) {
+    //   let key = localStorage.key(i);
+    //   let value = localStorage.getItem(key);
+    //   console.log(`${key}: ${value}`);
+    // }
+
+    const apiKey = "47a1a7df542d3d483227f758a7317dff";
+    function company() {
+      const companiesWrapper = document.getElementById("companiesWrapper");
+      companiesWrapper.innerHTML = ""; // Clear previous content
+      const comp = [
+        {
+          networkId: "2949",
+          networkName: "Shudder",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/5/51/Shudder_2017.svg",
+          networkType: "tv",
+        },
+        {
+          networkId: "213",
+          networkName: "Netflix",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png",
+          networkType: "tv",
+        },
+        {
+          networkId: "174",
+          networkName: "AMC",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/1/1d/Amc_logo.svg",
+          networkType: "tv",
+        },
+        {
+          networkId: "5187",
+          networkName: "Tubi",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/d/d1/Tubi_logo_2024_black.svg",
+          networkType: "tv",
+        },
+        {
+          networkId: "6219",
+          networkName: "MGM+",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/4/49/MGM%2B_logo.svg",
+          networkType: "tv",
+        },
+
+        {
+          networkId: "2552",
+          networkName: "Apple TV+",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg",
+          networkType: "tv",
+        },
+        {
+          networkId: "3353",
+          networkName: "Peacock",
+          logoLink:
+            "https://upload.wikimedia.org/wikipedia/commons/d/d3/NBCUniversal_Peacock_Logo.svg",
+          networkType: "tv",
+        },
+      ];
+
+      for (const eachcomp of comp) {
+        const companiesSlide = document.createElement("a");
+        companiesSlide.href = `#company/${eachcomp.networkId}`;
+        companiesSlide.className = "companySlide";
+        companiesSlide.classList.add("swiper-slide");
+
+        companiesSlide.innerHTML = `
+            <img class="companyImage lazy" data-src="${eachcomp.logoLink}"/>
+            `;
+        companiesWrapper.appendChild(companiesSlide);
+        lazy();
+      }
+
+      const compSwiper = new Swiper("#companiesContainer", {
+        slidesPerView: "auto",
+        spaceBetween: 30,
+        loop: false,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    }
+  </script>
+</html>
